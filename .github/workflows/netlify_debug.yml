@@ -16,10 +16,13 @@ jobs:
       #     echo "Verifying _redirects file in build directory:"
       #     cat build/_redirects
 
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
       - name: Publish
         id: netlify
         run: |
-          npm install -g netlify-cli
           netlify deploy --json --prod --dir ./build --message "production [${{ github.sha }}]"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

@@ -3,3 +3,9 @@ from = "https://app.opencloning.org/*"
 to = "https://opencloning.org/:splat"
 status = 301
 force = true
+
+[[redirects]]
+from = "https://hello.opencloning.org/*"
+to = "https://opencloning.org/:splat"
+status = 301
+force = true
