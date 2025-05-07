@@ -10,11 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy _redirects file to build
-        run: |
-          cp -v _redirects build/
-          echo "Verifying _redirects file in build directory:"
-          cat build/_redirects
+      # - name: Copy _redirects file to build
+      #   run: |
+      #     cp -v _redirects build/
+      #     echo "Verifying _redirects file in build directory:"
+      #     cat build/_redirects
 
       - name: Publish
         id: netlify
