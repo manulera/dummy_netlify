@@ -1,0 +1,31 @@
+name: Debug Netlify
+on:
+  workflow_dispatch:
+
+jobs:
+
+  deploy_to_netlify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish
+        id: netlify
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --json --prod --dir ./build --message "production [${{ github.sha }}]"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Parse NETLIFY_OUTPUT JSON
+        run: |
+          echo "The URL where the logs from the deploy can be found"
+          echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).logs }}"
+          echo ""
+          echo "the URL of the draft site that Netlify provides"
+          echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).deploy_url }}"
+          echo ""
+          echo "the URL of the "real" site, set only if `--prod` was passed"
+          echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).url }}"
